@@ -1171,7 +1171,7 @@ class StockData:
             for content in result['data']['list']:
                 update_list.append(content['avg_roe'][0])
 
-            # 获取10期ROE数据
+            # 获取10期ROE数据,如果在其他时间初始化数据库,下面6行代码需要修改。
             result = self.download_financial_indicator_from_xueqiu(code=code, count=10, type='Q4')
             for content in result['data']['list']:  # 遍历获取每年roe数据
                 update_list.append(content['avg_roe'][0])
@@ -1218,7 +1218,7 @@ class StockData:
                 script = f.read()
                 con.executescript(script)  
 
-            # 获取期间ROE数据,如果没有公布2022年度roe数据,则以0填充
+            # 获取期间ROE数据,如果没有公布2022年度roe数据,则以0填充。如果在其他时间初始化数据库,下面10行代码需要修改
             result = self.download_financial_indicator_from_xueqiu(code=code, count=count_year, type='Q4')  # 覆盖全部
             if result['data']['last_report_name'] != '2022年报':
                 update_list.append(0.00)
@@ -1911,7 +1911,7 @@ class StockData:
             sql = """ SELECT * FROM 'roe-all-stocks' """
             df = pd.read_sql_query(sql, con)
 
-            # 取出columns分为Q2和Q4两部分,按照升序排列(2023-04-24)
+            # 取出columns分为Q2和Q4两部分,按照降序排列(2023-04-24)
             q2_col = [item for item in df.columns[3:] if 'Q2' in item]
             q4_col = [item for item in df.columns[3:] if 'Q2' not in item]
             q2_col.sort(reverse=True)

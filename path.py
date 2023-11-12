@@ -5,10 +5,7 @@ import sys
 import os
 
 # 系统根目录, 实际运行中需要把目录改成自己的目录
-if sys.platform == 'darwin':  # mac os 系统根目录
-    BASE = '/Users/zhangrongluo/Desktop/pythonzone/stock-data'
-elif sys.platform == 'win32':  # windows 系统根目录
-    BASE = 'C:\\Users\\zhang\\Desktop\\pythonzone\\stock-data'
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # 文件夹路径
 data_package_path = os.path.join(BASE, 'data-package')
